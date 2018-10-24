@@ -1,14 +1,17 @@
+printf "Enter your git user name: \n"
+read username
+printf "Enter your git email: \n"
+read email
+
+
 # First you update your system
-sudo apt update && sudo apt-get dist-upgrade 
-
+sudo apt update && sudo apt-get dist-upgrade -y
 # Clean-up System
-sudo apt purge epiphany-browser epiphany-browser-data #browser
-sudo apt purge midori-granite #browser
+sudo apt purge epiphany-browser epiphany-browser-data -y #browser
+sudo apt purge midori-granite -y #browser
 # sudo apt-get purge noise # music player
-
-sudo apt autoremove
-sudo apt autoclean
-
+sudo apt autoremove -y
+sudo apt autoclean -y
 # Properties Commons (to install elementary tweaks)
 sudo apt install software-properties-common -y
 # gdebi for easy click-install of *.deb
@@ -18,15 +21,17 @@ sudo apt install rar unrar zip unzip p7zip-full p7zip-rar -y
 # GIT
 sudo apt install git -y
 # essential programs
-sudo apt install g++ libtool automake htop gparted vlc browser-plugin-vlc firefox inkscape shutter steam filezilla k4dirstat speedcrunch transmission libreoffice software-properties-gtk dconf -y
+sudo apt install g++ libtool automake htop gparted vlc browser-plugin-vlc firefox inkscape shutter steam filezilla k4dirstat speedcrunch transmission libreoffice software-properties-gtk dconf-tools -y
 # Java
 sudo add-apt-repository -y ppa:webupd8team/java
 sudo apt update
 sudo apt install oracle-java8-installer -y
-
 # Docker
 sudo apt install docker.io -y
 sudo gpasswd -a $USER docker
+
+# Wine and PlayOnLinux
+sudo apt install wine64 playonlinux -y
 
 # Multimedia Codecs
 sudo apt install ubuntu-restricted-extras libavcodec-extra ffmpeg -y
@@ -46,7 +51,6 @@ sudo apt install elementary-wallpapers-extra -y
 sudo add-apt-repository -y ppa:webupd8team/indicator-kdeconnect # alternative ppa
 sudo apt update
 sudo apt install kdeconnect indicator-kdeconnect -y
-
 # Google Chrome
 sudo apt install libxss1 libappindicator1 libindicator7 -y
 ## 1. downloading last stable package
@@ -68,7 +72,6 @@ echo deb http://repository.spotify.com stable non-free | sudo tee /etc/apt/sourc
 sudo apt update
 ## 4. Install Spotify
 sudo apt install spotify-client -y
-
 #Reduce overheating and improve battery life
 ## 1. adding repository
 sudo add-apt-repository -y ppa:linrunner/tlp
@@ -86,42 +89,54 @@ sudo add-apt-repository -y ppa:dawidd0811/neofetch
 sudo apt update
 # install package
 sudo apt install neofetch -y
-
 # Gnome system monitor
 sudo apt install gnome-system-monitor -y
 # System load indicator
 sudo apt install indicator-multiload -y
 
 # Git setup
-printf "Enter your git user name: \n"
-read username
-printf "Enter your git email: \n"
-read email
 git config --global user.name ${username}
 git config --global user.email ${email}
 
 # Download git repos
-mkdir -p ~/Documents/Github
+#mkdir -p ~/Documents/Github
 
 # Powerline fonts
 # clone
-git clone https://github.com/powerline/fonts.git ~/Documents/Github/fonts
+#git clone https://github.com/powerline/fonts.git ~/Documents/Github/fonts
 # install
-~/Documents/Github/fonts/install.sh
+#~/Documents/Github/fonts/install.sh
 
 # Papirus Icons Theme
 sudo add-apt-repository -y ppa:papirus/papirus
 sudo apt update
 sudo apt install papirus-icon-theme -y
-
 # install and change shell to zsh
-sudo apt install zsh
+sudo apt install zsh -y
 chsh -s $(which zsh)
 # install oh-my-zsh
 printf "Enter 'exit' after installation of oh-my-zsh is finished to get back to the installation script. \n "
 printf "Press <Enter> to continue. \n "
 read input
 sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
+
+# Install powerline font
+
+cd
+wget https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf
+wget https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf
+mkdir ~/.fonts/
+mv PowerlineSymbols.otf ~/.fonts/
+mkdir -p .config/fontconfig/conf.d #if directory doesn't exists
+fc-cache -vf ~/.fonts/
+mv 10-powerline-symbols.conf ~/.config/fontconfig/conf.d/
+
+# Solarized theme
+sudo apt install dconf-cli -y
+git clone git://github.com/sigurdga/gnome-terminal-colors-solarized.git ~/.solarized
+cd ~/.solarized
+./install.sh
+
 
 
 # add additional plugins
@@ -163,9 +178,19 @@ cd ~/
 
 cd ~/Downloads
 wget https://repo.anaconda.com/archive/Anaconda3-5.3.0-Linux-x86_64.sh
-bash Anaconda3-5.3.0-Linux-x86_64.sh
+bash Anaconda3-5.3.0-Linux-x86_64.sh -b
 rm Anaconda3-5.3.0-Linux-x86_64.sh
+cd
 
+# Intellij IDEA
+sudo wget -O /tmp/idea.tar.gz https://download.jetbrains.com/idea/ideaIU-2018.2.5-no-jdk.tar.gz
+sudo tar zxf /tmp/idea.tar.gz -C /opt/
+sudo sh /opt/idea/bin/idea.sh
+
+# Pycharm
+sudo wget -O /tmp/pycharm.tar.gz https://download-cf.jetbrains.com/python/pycharm-professional-2018.2.4.tar.gz
+sudo tar zxf /tmp/pycharm.tar.gz -C /opt/
+sudo sh /opt/pycharm/bin/pycharm.sh
 
 
 # Adding personal confiuration files
@@ -178,11 +203,10 @@ ln -f agnoster.zsh-theme ~/.oh-my-zsh/themes/
 dconf load / < dconf-settings.ini
 # Use this one to save conf.. dconf dump / > dconf-settings.ini
 
-
 # Final update
 sudo apt update && sudo apt upgrade -y
 
-sudo apt autoremove
-sudo apt autoclean
+sudo apt autoremove -y
+sudo apt autoclean -y
 
 sudo reboot
