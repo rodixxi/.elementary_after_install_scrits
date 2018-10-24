@@ -24,6 +24,10 @@ sudo add-apt-repository -y ppa:webupd8team/java
 sudo apt update
 sudo apt install oracle-java8-installer -y
 
+# Docker
+sudo apt install docker.io -y
+sudo gpasswd -a $USER docker
+
 # Multimedia Codecs
 sudo apt install ubuntu-restricted-extras libavcodec-extra ffmpeg -y
 
@@ -162,6 +166,17 @@ wget https://repo.anaconda.com/archive/Anaconda3-5.3.0-Linux-x86_64.sh
 bash Anaconda3-5.3.0-Linux-x86_64.sh
 rm Anaconda3-5.3.0-Linux-x86_64.sh
 
+
+
+# Adding personal confiuration files
+cd
+git clone https://github.com/rodixxi/.elementary_after_install_scrits.git
+cd .elementary_after_install_scrits
+ln -f .bashrc ~/
+ln -f .zshrc ~/
+ln -f agnoster.zsh-theme ~/.oh-my-zsh/themes/
+dconf load / < dconf-settings.ini
+# Use this one to save conf.. dconf dump / > dconf-settings.ini
 
 
 # Final update
