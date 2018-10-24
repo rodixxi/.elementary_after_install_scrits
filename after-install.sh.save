@@ -1,0 +1,35 @@
+# First you update your system
+sudo apt update && sudo apt-get dist-upgrade
+
+# Clean-up System
+sudo apt purge epiphany-browser epiphany-browser-data #browser
+sudo apt purge midori-granite #browser
+# sudo apt-get purge noise # music player
+
+sudo apt autoremove
+sudo apt autoclean
+
+# Properties Commons (to install elementary tweaks)
+sudo apt install software-properties-common
+# gdebi for easy click-install of *.deb
+sudo apt install gdebi
+#Install File Compression Libs
+sudo apt install rar unrar zip unzip p7zip-full p7zip-rar
+# GIT
+sudo apt install git
+# essential programs
+sudo apt install g++ libtool automake htop gparted vlc browser-plugin-vlc firefox inkscape shutter steam filezilla k4dirstat speedcrunch
+# Java
+sudo apt install openjdk-8-jre openjdk-8-jdk
+# Multimedia Codecs
+sudo apt install ubuntu-restricted-extras libavcodec-extra ffmpeg
+
+# Elementary Tweak
+## 1. adding repository
+sudo add-apt-repository ppa:mpstark/elementary-tweaks-dailyry-tweaks
+## 2. updating apt-get
+sudo apt update 
+## 3. installing tweaks
+sudo apt install elementary-tweaks
+## 4. installing wallpapers
+sudo apt install elementary-wallpapers-extra
